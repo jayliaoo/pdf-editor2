@@ -11,10 +11,11 @@
 - 🗑️ **批量删除**: 支持删除单页、多页或页码范围
 - 🔄 **页面旋转**: 支持 90 度倍数旋转
 - 📑 **拖拽排序**: 拖拽缩略图重新排列页面顺序
+- 💾 **保存功能**: 支持保存和另存为
 
 ## 系统要求
 
-- macOS 13.0+
+- macOS 14.0+
 - Xcode 15.0+
 - Swift 5.9+
 
@@ -43,6 +44,8 @@ xcodebuild -scheme PDFEditor -destination 'platform=macOS' build
 
 - `⌘O`: 打开文件
 - `⌘W`: 关闭窗口
+- `⌘S`: 保存
+- `⌘⇧S`: 另存为
 - `⌘⇧E`: 导出当前页
 - `⌘⇧R`: 顺时针旋转
 - `⌘⌥R`: 逆时针旋转
@@ -52,22 +55,22 @@ xcodebuild -scheme PDFEditor -destination 'platform=macOS' build
 
 ```
 PDFEditor/
-├── Models/              # 数据模型
-├── Views/               # SwiftUI 视图
+├── PDFEditorApp.swift       # 应用入口
+├── Views/                   # SwiftUI 视图
 │   ├── ContentView.swift
 │   ├── ThumbnailSidebarView.swift
 │   ├── ThumbnailItemView.swift
 │   ├── PDFPreviewView.swift
 │   ├── ToolPanelView.swift
 │   └── EmptyStateView.swift
-├── ViewModels/          # 状态管理
+├── ViewModels/              # 状态管理
 │   ├── PDFEditorState.swift
 │   └── PDFEditorState+Actions.swift
-├── Utilities/           # 工具类
+├── Utilities/               # 工具类
 │   ├── ThumbnailGenerator.swift
 │   ├── ThumbnailCacheManager.swift
 │   └── NotificationNames.swift
-└── Resources/           # 资源文件
+└── Resources/               # 资源文件
 ```
 
 ## 技术栈
