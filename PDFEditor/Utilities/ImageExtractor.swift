@@ -3,6 +3,27 @@ import PDFKit
 import AppKit
 import CoreGraphics
 
+// MARK: - CGPDFDictionary Swift 扩展
+
+private extension CGPDFDictionaryRef {
+    /// 纯 Swift 实现：遍历字典所有键，替代 ObjC 的 CGPDFDictionaryApplyFunction
+    func allKeys() -> [String] {
+        var keys: [String] = []
+        withUnsafeMutablePointer(to: &keys) { ptr in
+            CGPDFDictionaryApplyFunction(
+                self,
+                { key, _, info in
+                    guard let info = info else { return }
+                    let result = info.bindMemory(to: [String].self, capacity: 1)
+                    result.pointee.append(String(cString: key))
+                },
+                ptr
+            )
+        }
+        return keys
+    }
+}
+
 /// PDF 页面中的图片信息
 struct ExtractedImage: Identifiable {
     let id = UUID()
@@ -42,12 +63,12 @@ class ImageExtractor {
 
         let pageDict = cgPage.dictionary
 
-        // 使用 Objective-C 辅助类获取所有键名
+        // 纯 Swift 获取所有键名
         guard let xObjectsDict = getXObjectsDictionary(from: pageDict) else {
             return images
         }
 
-        let keys = PDFDictionaryHelper.allKeys(from: xObjectsDict)
+        let keys = xObjectsDict.allKeys()
 
         // 遍历所有键，尝试提取图片
         for key in keys {

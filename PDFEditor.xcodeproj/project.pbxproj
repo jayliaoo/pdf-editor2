@@ -22,7 +22,6 @@
 		A100000D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A200000D; };
 		A100000E /* ImageExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000010; };
 		A100000F /* ImageExtractionDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000011; };
-		A1000010 /* PDFDictionaryHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A2000013; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,9 +42,6 @@
 		A200000F /* PDFEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PDFEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2000010 /* ImageExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtractor.swift; sourceTree = "<group>"; };
 		A2000011 /* ImageExtractionDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtractionDialogView.swift; sourceTree = "<group>"; };
-		A2000012 /* PDFDictionaryHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PDFDictionaryHelper.h; sourceTree = "<group>"; };
-		A2000013 /* PDFDictionaryHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PDFDictionaryHelper.m; sourceTree = "<group>"; };
-		A2000014 /* PDFEditor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PDFEditor-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +67,6 @@
 			isa = PBXGroup;
 			children = (
 				A2000001 /* PDFEditorApp.swift */,
-				A2000014 /* PDFEditor-Bridging-Header.h */,
 				A4000004 /* Views */,
 				A4000005 /* ViewModels */,
 				A4000006 /* Utilities */,
@@ -119,8 +114,6 @@
 				A200000B /* ThumbnailCacheManager.swift */,
 				A200000C /* NotificationNames.swift */,
 				A2000010 /* ImageExtractor.swift */,
-				A2000012 /* PDFDictionaryHelper.h */,
-				A2000013 /* PDFDictionaryHelper.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -216,7 +209,6 @@
 				A100000C /* NotificationNames.swift in Sources */,
 				A100000E /* ImageExtractor.swift in Sources */,
 				A100000F /* ImageExtractionDialogView.swift in Sources */,
-				A1000010 /* PDFDictionaryHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,7 +355,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.personal.PDFEditor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "PDFEditor/PDFEditor-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -390,7 +381,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.personal.PDFEditor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "PDFEditor/PDFEditor-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
