@@ -244,4 +244,27 @@ extension PDFEditorState {
             try? data.write(to: url)
         }
     }
+
+    // MARK: - 图片提取
+
+    /// 从选中页面提取图片
+    /// - Returns: 提取的图片数组
+    func extractImagesFromSelectedPages() -> [ExtractedImage] {
+        guard let document = currentDocument else { return [] }
+
+        // 如果没有选中页面，使用当前页
+        let pageIndices = selectedPages.isEmpty ? [currentPageIndex] : Array(selectedPages)
+
+        return ImageExtractor.extractImages(from: document, pageIndices: pageIndices)
+    }
+
+    /// 保存提取的图片到目录
+    /// - Parameters:
+    ///   - images: 要保存的图片
+    ///   - directory: 目标目录
+    /// - Returns: 成功保存的文件数量
+    func saveExtractedImages(_ images: [ExtractedImage], to directory: URL) -> Int {
+        let savedURLs = ImageExtractor.saveImages(images, to: directory)
+        return savedURLs.count
+    }
 }

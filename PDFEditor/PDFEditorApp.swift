@@ -44,6 +44,11 @@ struct PDFEditorApp: App {
                     NotificationCenter.default.post(name: .exportCurrentPage, object: nil)
                 }
                 .keyboardShortcut("e", modifiers: [.command, .shift])
+
+                Button("Extract Images...") {
+                    NotificationCenter.default.post(name: .extractImages, object: nil)
+                }
+                .keyboardShortcut("i", modifiers: [.command, .shift])
             }
 
             CommandMenu("Pages") {

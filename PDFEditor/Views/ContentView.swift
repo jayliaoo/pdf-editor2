@@ -4,6 +4,8 @@ import AppKit
 
 class ContentViewModel: ObservableObject {
     @Published var state = PDFEditorState()
+    @Published var showImageExtractionDialog = false
+    @Published var extractedImages: [ExtractedImage] = []
     private var observers: [NSObjectProtocol] = []
 
     init() {
@@ -49,7 +51,10 @@ class ContentViewModel: ObservableObject {
         let obs10 = NotificationCenter.default.addObserver(forName: .saveDocumentAs, object: nil, queue: .main) { [weak self] _ in
             self?.saveDocumentAs()
         }
-        observers = [obs1, obs2, obs3, obs4, obs5, obs6, obs7, obs8, obs9, obs10]
+        let obs11 = NotificationCenter.default.addObserver(forName: .extractImages, object: nil, queue: .main) { [weak self] _ in
+            self?.extractImages()
+        }
+        observers = [obs1, obs2, obs3, obs4, obs5, obs6, obs7, obs8, obs9, obs10, obs11]
     }
 
     deinit {
@@ -155,6 +160,43 @@ class ContentViewModel: ObservableObject {
             }
         }
     }
+
+    func extractImages() {
+        guard state.hasDocument else { return }
+
+        let images = state.extractImagesFromSelectedPages()
+
+        if images.isEmpty {
+            let alert = NSAlert()
+            alert.messageText = "未找到图片"
+            alert.informativeText = "选中的页面中没有找到可提取的图片。"
+            alert.alertStyle = .informational
+            alert.runModal()
+            return
+        }
+
+        extractedImages = images
+        showImageExtractionDialog = true
+    }
+
+    func saveExtractedImages(_ images: [ExtractedImage]) {
+        let panel = NSOpenPanel()
+        panel.canChooseFiles = false
+        panel.canChooseDirectories = true
+        panel.canCreateDirectories = true
+        panel.allowsMultipleSelection = false
+        panel.message = "选择保存图片的目录"
+
+        if panel.runModal() == .OK, let url = panel.url {
+            let count = state.saveExtractedImages(images, to: url)
+
+            let alert = NSAlert()
+            alert.messageText = "提取成功"
+            alert.informativeText = "成功保存 \(count) 张图片到:\n\(url.path)"
+            alert.alertStyle = .informational
+            alert.runModal()
+        }
+    }
 }
 
 struct ContentView: View {
@@ -208,6 +250,11 @@ struct ContentView: View {
         .onDrop(of: [.fileURL], delegate: FileDropDelegate { url in
             state.loadDocument(url: url)
         })
+        .sheet(isPresented: $viewModel.showImageExtractionDialog) {
+            ImageExtractionDialogView(images: viewModel.extractedImages) { selectedImages in
+                viewModel.saveExtractedImages(selectedImages)
+            }
+        }
     }
 }
 

@@ -14,4 +14,5 @@ extension Notification.Name {
     static let insertPDF = Notification.Name("insertPDF")
     static let saveDocument = Notification.Name("saveDocument")
     static let saveDocumentAs = Notification.Name("saveDocumentAs")
+    static let extractImages = Notification.Name("extractImages")
 }

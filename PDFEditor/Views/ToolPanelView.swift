@@ -64,6 +64,15 @@ struct ToolPanelView: View {
                         action: { exportPage(asImage: false) }
                     )
                     .disabled(!state.hasDocument)
+
+                    Divider()
+
+                    ToolButton(
+                        icon: "square.and.arrow.up.on.square",
+                        title: "提取图片",
+                        action: { extractImages() }
+                    )
+                    .disabled(!state.hasDocument)
                 }
             }
 
@@ -123,6 +132,10 @@ struct ToolPanelView: View {
 
     private func insertPDF() {
         NotificationCenter.default.post(name: .insertPDF, object: nil)
+    }
+
+    private func extractImages() {
+        NotificationCenter.default.post(name: .extractImages, object: nil)
     }
 
     private func exportPage(asImage: Bool) {
